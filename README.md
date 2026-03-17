@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
-</p>
-
 # WebCMS
 
 WebCMS adalah sebuah Sistem Manajemen Konten (CMS) berbasis **Laravel 11** yang dirancang secara khusus untuk kebutuhan *Company Profile*, Sekolah, institusi, maupun portofolio personal. Sistem ini dibangun dengan fokus pada performa, estetika tampilan modern, dan kemudahan bagi administrator dalam mengelola konten statis dan dinamis.
