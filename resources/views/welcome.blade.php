@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        @php
+            try { $favicon = \App\Models\Setting::get('site_favicon',''); } catch (\Exception $e) { $favicon = ''; }
+        @endphp
+        @if($favicon)<link rel="icon" type="image/webp" href="{{ asset($favicon) }}">@endif
         <title>Laravel</title>
 
         <!-- Fonts -->

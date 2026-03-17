@@ -106,6 +106,7 @@ class SettingController extends Controller
             default      => imagecreatefromjpeg($file->getRealPath()),
         };
 
+        imagepalettetotruecolor($source);
         imagewebp($source, $path, 90);
         imagedestroy($source);
 

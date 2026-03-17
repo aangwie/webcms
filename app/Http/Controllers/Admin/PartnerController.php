@@ -109,7 +109,8 @@ class PartnerController extends Controller
             default      => imagecreatefromjpeg($file->getRealPath()),
         };
 
-        imagewebp($source, $path, 90);
+        imagepalettetotruecolor($source);
+        imagewebp($source, $path, 100);
         imagedestroy($source);
 
         return "uploads/partners/{$filename}";

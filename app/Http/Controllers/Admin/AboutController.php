@@ -51,7 +51,8 @@ class AboutController extends Controller
                 default      => imagecreatefromjpeg($file->getRealPath()),
             };
 
-            imagewebp($source, $path, 90);
+            imagepalettetotruecolor($source);
+            imagewebp($source, $path, 100);
             imagedestroy($source);
 
             $about->image_path = "uploads/about/{$filename}";

@@ -103,8 +103,11 @@ class PostController extends Controller
             default      => imagecreatefromjpeg($file->getRealPath()),
         };
 
-        // Konversi ke WebP dengan kualitas 80%
-        imagewebp($source, $path, 80);
+        // Perbaiki palette image support
+        imagepalettetotruecolor($source);
+
+        // Konversi ke WebP dengan kualitas 100 (tanpa kompresi visual signifikan)
+        imagewebp($source, $path, 100);
         imagedestroy($source);
 
         return "uploads/{$folder}/{$filename}";

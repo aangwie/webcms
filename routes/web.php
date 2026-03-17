@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Support\Facades\Route;
 
 // ── Installer ──
@@ -33,6 +35,8 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::get('about', [AboutController::class, 'edit'])->name('about.edit');
     Route::put('about', [AboutController::class, 'update'])->name('about.update');
 
+    Route::resource('menus', MenuController::class)->except(['show']);
+    Route::resource('sliders', SliderController::class)->except(['show']);
     Route::resource('posts', PostController::class)->except(['show']);
     Route::resource('portfolios', PortfolioController::class)->except(['show']);
     Route::resource('services', ServiceController::class)->except(['show']);

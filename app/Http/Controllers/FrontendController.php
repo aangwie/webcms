@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Portfolio;
 use App\Models\Service;
 use App\Models\Setting;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -24,6 +25,7 @@ class FrontendController extends Controller
     public function home()
     {
         $data = $this->siteData();
+        $sliders    = Slider::where('is_active', true)->orderBy('order_index')->get();
         $services   = Service::where('is_active', true)->take(6)->get();
         $posts      = Post::where('is_published', true)->latest()->take(3)->get();
         $portfolios = Portfolio::latest()->take(8)->get();
@@ -39,7 +41,7 @@ class FrontendController extends Controller
             'youtube'   => Setting::get('youtube', ''),
         ];
 
-        return view('frontend.home', array_merge($data, compact('services', 'posts', 'portfolios', 'partners', 'about', 'settings')));
+        return view('frontend.home', array_merge($data, compact('sliders', 'services', 'posts', 'portfolios', 'partners', 'about', 'settings')));
     }
 
     public function profil()

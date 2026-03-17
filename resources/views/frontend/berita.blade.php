@@ -11,7 +11,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>body{font-family:'Inter',sans-serif}[x-cloak]{display:none!important}</style>
-    <script>function darkMode(){return{isDark:localStorage.getItem('darkMode')==='true'||(localStorage.getItem('darkMode')===null&&window.matchMedia('(prefers-color-scheme:dark)').matches),toggle(){this.isDark=!this.isDark;localStorage.setItem('darkMode',this.isDark)}}}</script>
+    <script>function darkMode(){const s=localStorage.getItem('themeMode'),p=window.matchMedia('(prefers-color-scheme:dark)');function r(m){return m==='dark'||(m==='auto'&&p.matches)}return{themeMode:s||'auto',isDark:r(s||'auto'),setTheme(m){this.themeMode=m;localStorage.setItem('themeMode',m);this.isDark=r(m)},cycleTheme(){const ms=['light','dark','auto'];this.setTheme(ms[(ms.indexOf(this.themeMode)+1)%3])},init(){p.addEventListener('change',()=>{if(this.themeMode==='auto')this.isDark=p.matches})}}}</script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-slate-200 transition-colors" x-data="{mobileMenuOpen:false}">
     @include('frontend.components.navbar')

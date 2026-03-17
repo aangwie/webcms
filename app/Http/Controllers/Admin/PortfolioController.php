@@ -98,7 +98,8 @@ class PortfolioController extends Controller
             default      => imagecreatefromjpeg($file->getRealPath()),
         };
 
-        imagewebp($source, $path, 80);
+        imagepalettetotruecolor($source);
+        imagewebp($source, $path, 100);
         imagedestroy($source);
 
         return "uploads/{$folder}/{$filename}";
