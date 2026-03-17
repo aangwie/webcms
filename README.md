@@ -1,66 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
 </p>
 
-## About Laravel
+# WebCMS
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+WebCMS adalah sebuah Sistem Manajemen Konten (CMS) berbasis **Laravel 11** yang dirancang secara khusus untuk kebutuhan *Company Profile*, Sekolah, institusi, maupun portofolio personal. Sistem ini dibangun dengan fokus pada performa, estetika tampilan modern, dan kemudahan bagi administrator dalam mengelola konten statis dan dinamis.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Proyek ini menggunakan **Tailwind CSS** dipadukan dengan **Alpine.js** untuk menyajikan antarmuka *responsive* di berbagai perangkat, lengkap dengan transisi halus dan fitur mode gelap (Dark Mode) cerdas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Sistem Frontend Modern
+- **Desain Estetik & Responsive:** Tampilan dirancang khusus menggunakan susunan gradasi warna modern dan utilitas layout Tailwind CSS (termasuk *Glassmorphism* & *Micro-animations*).
+- **Dark Mode Pintar:** Didukung oleh Alpine.js dengan konfigurasi *Gelap / Terang / Otomatis (mengikuti default sistem)* yang menyimpan referensi preferensi user melalui *localStorage*.
+- **Hero Slider Dinamis:** Bagian *Homepage* memadukan tulisan informasi utama (*Split Layout*) bersamaan dengan fungsi Carousel Slider untuk media promosi berbasis *WebP high-quality*.
+- **Kategori Dinamis:** Memiliki modul Berita (*News/Blog*), Layanan Pilihan, Galeri Portofolio Klien, hingga daftar Mitra Industri.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Panel Admin (Dashboard) Konten
+- **Manajemen Modul Lengkap:** Antarmuka pengurus *(backend)* memungkinkan administrator menambah, mengubah, atau menghapus konten (*CRUD*) pada Slider, Berita/Pengumuman, Mitra, Layanan, dan Portofolio.
+- **Konversi WebP Otomatis & Lossless:** Sistem secara otomatis mengenkripsi dan mengubah gambar tipe JPG/PNG standar dari *uploader* menjadi format `WebP (Kualitas 100)` agar pengaksesan gambar di website jauh lebih efisien dan terhindar dari isu *rendering compression bandwidth*.
+- **Pengaturan Konfigurasi Universal (`Setting`):** Semua tulisan dasar sistem (Nama Identitas Sistem, Slogan/Prolog, Logo Website Utama, Ikon/Favicon, Label Sosmed) dapat disesuaikan langsung di panel tanpa perbaikan basis kode sumber (Database Drive Config).
+- **Statistik Dashboard Visual:** Antarmuka *admin backend* informatif dengan panel ringkasan berwarna gradien estetik yang responsif disertai sistem *Sidebar Collapse* pada sisi navigasinya.
+- **Pembuatan Menu Dinamis:** Konfigurasi penautan Navigasi (termasuk visibilitasnya) pada Frontend dari bilah Administrasi dengan model referensi hirarki aktif / nonaktif (`is_active`).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🛠️ Tech Stack & Requirements
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Pastikan sistem perangkat Anda telah menginstal dan memenuhi prasyarat dependensi pendukung:
 
-### Premium Partners
+- **PHP** `>= 8.2`
+- **Composer** (PHP Package Manager)
+- **Database Server:** MySQL, MariaDB, atau SQLite (Sesuai kebutuhan, direkomendasikan env: MySQL/MariaDB)
+- **Web Server:** Nginx atau Apache (contoh: bundle XAMPP/Laragon dll)
+- Ekstensi PHP *(Wajib)*: `BCMath`, `Ctype`, `DOM`, `Fileinfo`, `JSON`, `Mbstring`, `OpenSSL`, `PDO`, `Tokenizer`, `XML`, serta ekstensi `GD` (untuk proses optimasi WebP).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 📋 Panduan Instalasi (Development Lokal)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Ikuti instruksi langkah-langkah di bawah ini untuk memasang WebCMS pada *environment local* Anda:
 
-## Code of Conduct
+### 1. Kloning Repositori
+Clone proyek repositori ini atau *extract/download* rilis sumber (.zip) ke dalam *root path* *server* lokal Anda (misal: di dalam direktori `htdocs` jika Anda menggunakan XAMPP):
+```bash
+git clone https://github.com/aangwie/webcms.git
+cd webdev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2. Konfigurasi Depedensi Laravel (Composer)
+Unduh seluruh library vendor Laravel via `composer`:
+```bash
+composer install
+```
 
-## Security Vulnerabilities
+### 3. File Lingkungan Konfigurasi (.env)
+Bentuk berkas konfigurasi env dengan menyalin data *example configuration*.
+```bash
+cp .env.example .env
+```
+_**Catatan:** Buka file `.env` kemudian sesuaikan konfigurasi pangkalan data / database (Nama, user & password) di *host* mesin web-*server* Anda masing-masing._ 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Membuat Kunci / *Application Key*
+Guna meningkatkan proteksi aplikasi melalui algoritma enkripsi App:
+```bash
+php artisan key:generate
+```
 
-## License
+### 5. Membangun & Menautkan Sistem Database
+Berikan trigger ke framework Laravel agar merancang basis tabulasi database-nya dengan model migrasi (serta dummy *Data Seeders* jika diperlukan).
+```bash
+php artisan migrate
+```
+Jika Anda memuat aset dari server public storage, eksekusi pembuatan referensi pintas / symlink:
+```bash
+php artisan storage:link
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 6. Menjalankan *Development System Server*
+Anda sudah dapat mengakses website anda secara localhost / offline dan mengklik antar tautan tanpa web host asli dengan memanfaatkan terminal `serve`:
+```bash
+php artisan serve
+```
+Web dapat dibuka lewat browser di rujukan portal: `http://localhost:8000` atau `http://127.0.0.1:8000`
+
+---
+
+## 🤝 Keterlibatan dan Kontribusi
+Sistem open source Laravel memperbolehkan siapapun terlibat melakukan adaptasi, memberikan *issue*, maupun melakukan permohonan tarik *(Pull Request)*. Pedoman kontribusi secara mendasar dapat Anda ikuti dari kerangka asal milik standar platform resmi Laravel. Silangkan laporkan ke admin pengelola proyek jika Anda menemukan *error* serius (*vulnerability* / masalah sistem).
+
+## 📄 Lisensi
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT). Modifikasi rancangan pada repositori aplikasi ini berlaku pada perundang-undangan Open Source yang diakui pengelola.
