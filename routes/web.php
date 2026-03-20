@@ -45,6 +45,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+    Route::put('settings/account', [SettingController::class, 'updateAccount'])->name('settings.account');
 
     Route::get('update', [UpdateWebsiteController::class, 'index'])->name('update.index');
     Route::post('update/token', [UpdateWebsiteController::class, 'saveToken'])->name('update.token');

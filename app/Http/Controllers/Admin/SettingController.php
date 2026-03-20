@@ -7,6 +7,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
@@ -79,6 +80,28 @@ class SettingController extends Controller
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Pengaturan berhasil disimpan.');
+    }
+
+    public function updateAccount(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'password' => ['nullable', 'string', 'min:8'],
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.settings.index')->with('success', 'Profil akun berhasil diperbarui.');
     }
 
     private function uploadImage($file, $settingKey, $dirPath, $prefix)
