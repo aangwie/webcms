@@ -8,6 +8,7 @@
     <title>{{ $siteName }} - Layanan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={darkMode:'class'}</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>body{font-family:'Inter',sans-serif}[x-cloak]{display:none!important}</style>
@@ -26,7 +27,11 @@
             @foreach($services as $svc)
             <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 hover:shadow-lg transition-all text-center">
                 <div class="w-16 h-16 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                    {{ $svc->icon ?? $loop->iteration }}
+                    @if($svc->icon && (str_starts_with($svc->icon, 'fas ') || str_starts_with($svc->icon, 'fab ') || str_starts_with($svc->icon, 'far ')))
+                        <i class="{{ $svc->icon }}"></i>
+                    @else
+                        {{ $svc->icon ?? $loop->iteration }}
+                    @endif
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">{{ $svc->name }}</h3>
                 <p class="text-gray-500 dark:text-slate-400 text-sm">{{ $svc->description }}</p>

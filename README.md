@@ -69,6 +69,8 @@ php artisan key:generate
 Berikan trigger ke framework Laravel agar merancang basis tabulasi database-nya dengan model migrasi (serta dummy *Data Seeders* jika diperlukan).
 ```bash
 php artisan migrate
+
+php artisan db:seed
 ```
 Jika Anda memuat aset dari server public storage, eksekusi pembuatan referensi pintas / symlink:
 ```bash
@@ -83,6 +85,12 @@ php artisan serve
 Web dapat dibuka lewat browser di rujukan portal: `http://localhost:8000` atau `http://127.0.0.1:8000`
 
 ---
+
+Untuk login admin gunakan akun ini
+```bash
+username : admin@webcms.com
+password : password
+```
 
 ## 🤝 Keterlibatan dan Kontribusi
 Sistem open source Laravel memperbolehkan siapapun terlibat melakukan adaptasi, memberikan *issue*, maupun melakukan permohonan tarik *(Pull Request)*. Pedoman kontribusi secara mendasar dapat Anda ikuti dari kerangka asal milik standar platform resmi Laravel. Silangkan laporkan ke admin pengelola proyek jika Anda menemukan *error* serius (*vulnerability* / masalah sistem).

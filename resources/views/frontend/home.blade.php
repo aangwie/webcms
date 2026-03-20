@@ -8,6 +8,7 @@
     <title>{{ $siteName }} - Beranda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={darkMode:'class'}</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -57,9 +58,9 @@
                 </div>
             </div>
             
-            {{-- Right Side: Exactly 1/3 Rounded Carousel --}}
-            <div class="w-full sm:w-8/12 md:w-6/12 lg:w-4/12 flex-shrink-0 mx-auto lg:mx-0 relative z-10">
-                <div x-data="{current:0,total:{{ $sliders->count() > 0 ? $sliders->count() : 1 }}}" x-init="setInterval(()=>{current=(current+1)%total},4500)" class="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl ring-4 sm:ring-8 ring-white/60 dark:ring-slate-800 backdrop-blur-sm">
+            {{-- Right Side: Carousel --}}
+            <div class="w-full sm:w-10/12 md:w-8/12 lg:w-5/12 flex-shrink-0 mx-auto lg:mx-0 relative z-10">
+                <div x-data="{current:0,total:{{ $sliders->count() > 0 ? $sliders->count() : 1 }}}" x-init="setInterval(()=>{current=(current+1)%total},4500)" class="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl ring-4 sm:ring-8 ring-white/60 dark:ring-slate-800 backdrop-blur-sm">
                     @if($sliders->count() > 0)
                         @foreach($sliders as $i => $sl)
                         <div x-show="current==={{ $i }}" x-transition:enter="transition-opacity duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-1000" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="absolute inset-0">
@@ -77,8 +78,9 @@
                         </div>
                         @endforeach
                     @else
-                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                        <span class="text-white font-medium">Carousel Image</span>
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 flex flex-col items-center justify-center p-6 text-center">
+                        <span class="text-white font-bold text-lg mb-2">Carousel Image</span>
+                        <span class="text-indigo-200 text-sm">Disarankan ukuran: 800px x 600px (atau rasio 4:3)</span>
                     </div>
                     @endif
                     
@@ -95,6 +97,37 @@
         </div>
     </section>
 
+    
+    {{-- ═══════ LAYANAN ═══════ --}}
+    @if($services->count() > 0)
+    <section class="py-20 bg-gray-50 dark:bg-slate-950 transition-colors border-b border-gray-100 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 tracking-wide uppercase">Layanan Kami</h2>
+                <p class="mt-2 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Solusi Terbaik Untuk Anda</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach($services->take(9) as $svc)
+                <div class="group bg-white dark:bg-slate-900 rounded-2xl p-8 border border-gray-100 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-800 hover:shadow-lg transition-all duration-300">
+                    <div class="h-14 w-14 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-md">
+                        @if($svc->icon && (str_starts_with($svc->icon, 'fas ') || str_starts_with($svc->icon, 'fab ') || str_starts_with($svc->icon, 'far ')))
+                            <i class="{{ $svc->icon }} text-xl"></i>
+                        @else
+                            <span class="font-bold text-xl">{{ $svc->icon ?? $loop->iteration }}</span>
+                        @endif
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">{{ $svc->name }}</h3>
+                    <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed">{{ Str::limit($svc->description, 120) }}</p>
+                </div>
+                @endforeach
+            </div>
+            <div class="text-center mt-12">
+                <a href="{{ route('layanan') }}" class="inline-flex py-3 px-6 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition">Lihat Semua Layanan &rarr;</a>
+            </div>
+        </div>
+    </section>
+    @endif
+
     {{-- ═══════ PORTOFOLIO (Menggantikan Tentang Kami) ═══════ --}}
     @if($portfolios->count() > 0)
     <section class="py-20 bg-gray-50 dark:bg-slate-950 transition-colors">
@@ -105,7 +138,7 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                @foreach($portfolios->take(8) as $pf)
+                @foreach($portfolios->take(9) as $pf)
                 <div class="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-800">
                     <div class="aspect-[4/3] overflow-hidden relative">
                         @if($pf->image_path)
@@ -169,32 +202,6 @@
             
             <div class="text-center mt-12">
                 <a href="{{ route('berita') }}" class="inline-flex py-3 px-6 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition">Lihat Semua Berita &rarr;</a>
-            </div>
-        </div>
-    </section>
-    @endif
-
-    {{-- ═══════ LAYANAN ═══════ --}}
-    @if($services->count() > 0)
-    <section class="py-20 bg-gray-50 dark:bg-slate-950 transition-colors border-b border-gray-100 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 tracking-wide uppercase">Layanan Kami</h2>
-                <p class="mt-2 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Solusi Terbaik Untuk Anda</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach($services as $svc)
-                <div class="group bg-white dark:bg-slate-900 rounded-2xl p-8 border border-gray-100 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-800 hover:shadow-lg transition-all duration-300">
-                    <div class="h-14 w-14 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-md">
-                        <span class="font-bold text-xl">{{ $svc->icon ?? $loop->iteration }}</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">{{ $svc->name }}</h3>
-                    <p class="text-gray-500 dark:text-slate-400 text-sm leading-relaxed">{{ Str::limit($svc->description, 120) }}</p>
-                </div>
-                @endforeach
-            </div>
-            <div class="text-center mt-12">
-                <a href="{{ route('layanan') }}" class="inline-flex py-3 px-6 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition">Lihat Semua Layanan &rarr;</a>
             </div>
         </div>
     </section>

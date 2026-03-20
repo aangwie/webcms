@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" x-data="darkMode()" :class="{ 'dark': isDark }">
+<html lang="id" x-data :class="{ 'dark': $store.theme.isDark }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,18 +12,43 @@
     @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={darkMode:'class'}</script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>body{font-family:'Inter',sans-serif}[x-cloak]{display:none!important}</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body{font-family:'Inter',sans-serif}
+        [x-cloak]{display:none!important}
+        .dark input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1)}
+        .dark select{color-scheme:dark}
+    </style>
     <script>
-        function darkMode(){
-            return {
-                isDark: localStorage.getItem('darkMode')==='true'||(localStorage.getItem('darkMode')===null&&window.matchMedia('(prefers-color-scheme:dark)').matches),
-                toggle(){this.isDark=!this.isDark;localStorage.setItem('darkMode',this.isDark)}
+        // Register Alpine store BEFORE Alpine loads
+        document.addEventListener('alpine:init', () => {
+            const stored = localStorage.getItem('themeMode') || 'auto';
+            const prefersDark = window.matchMedia('(prefers-color-scheme:dark)');
+            function resolve(mode){
+                if(mode==='dark') return true;
+                if(mode==='light') return false;
+                return prefersDark.matches;
             }
-        }
+            Alpine.store('theme', {
+                mode: stored,
+                isDark: resolve(stored),
+                open: false,
+                setMode(m){
+                    this.mode = m;
+                    this.isDark = resolve(m);
+                    localStorage.setItem('themeMode', m);
+                    this.open = false;
+                }
+            });
+            prefersDark.addEventListener('change', () => {
+                const t = Alpine.store('theme');
+                if(t.mode==='auto') t.isDark = prefersDark.matches;
+            });
+        });
     </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-100 dark:bg-slate-950 min-h-screen transition-colors" x-data="{ sidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed')==='true' }" x-init="$watch('sidebarCollapsed',val=>localStorage.setItem('sidebarCollapsed',val))">
 
@@ -73,12 +98,37 @@
             <div class="flex items-center justify-between h-16 px-4 sm:px-6">
                 <button @click="sidebarOpen=true" class="lg:hidden text-gray-500 dark:text-slate-400 hover:text-gray-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 <h1 class="text-lg font-semibold text-gray-800 dark:text-white hidden sm:block">@yield('header','Dashboard')</h1>
-                <div class="flex items-center space-x-3" x-data="{profileOpen:false}">
-                    <button @click="$root.__x.$data.toggle()" class="p-2 rounded-lg text-gray-500 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800" title="Mode Gelap">
-                        <svg x-show="!$root.__x.$data.isDark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-                        <svg x-show="$root.__x.$data.isDark" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    </button>
+                <div class="flex items-center space-x-3">
+
+                    {{-- Theme Toggle Dropdown --}}
                     <div class="relative">
+                        <button @click="$store.theme.open = !$store.theme.open" class="p-2 rounded-lg text-gray-500 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors" title="Mode Tampilan">
+                            <svg x-show="$store.theme.mode==='light'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                            <svg x-show="$store.theme.mode==='dark'" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                            <svg x-show="$store.theme.mode==='auto'" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </button>
+                        <div x-show="$store.theme.open" @click.away="$store.theme.open=false" x-cloak x-transition
+                             class="absolute right-0 mt-2 w-44 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 py-1.5 z-50">
+                            <button @click="$store.theme.setMode('light')" class="w-full flex items-center px-4 py-2.5 text-sm transition-colors hover:bg-gray-100 dark:hover:bg-slate-700" :class="$store.theme.mode==='light' ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-slate-300'">
+                                <svg class="w-4 h-4 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                                Terang
+                                <svg x-show="$store.theme.mode==='light'" class="w-4 h-4 ml-auto text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            </button>
+                            <button @click="$store.theme.setMode('dark')" class="w-full flex items-center px-4 py-2.5 text-sm transition-colors hover:bg-gray-100 dark:hover:bg-slate-700" :class="$store.theme.mode==='dark' ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-slate-300'">
+                                <svg class="w-4 h-4 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                                Gelap
+                                <svg x-show="$store.theme.mode==='dark'" class="w-4 h-4 ml-auto text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            </button>
+                            <button @click="$store.theme.setMode('auto')" class="w-full flex items-center px-4 py-2.5 text-sm transition-colors hover:bg-gray-100 dark:hover:bg-slate-700" :class="$store.theme.mode==='auto' ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-slate-300'">
+                                <svg class="w-4 h-4 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                Otomatis
+                                <svg x-show="$store.theme.mode==='auto'" class="w-4 h-4 ml-auto text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Profile Dropdown --}}
+                    <div class="relative" x-data="{profileOpen:false}">
                         <button @click="profileOpen=!profileOpen" class="flex items-center text-sm text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white">
                             <span class="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center font-semibold text-sm mr-2">{{ mb_substr(Auth::user()->name,0,1) }}</span>
                             <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
