@@ -11,7 +11,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Mendukung mode Shared Hosting (cPanel) dimana public foldernya adalah public_html
+        $publicHtmlPath = base_path('../public_html');
+        if (is_dir($publicHtmlPath)) {
+            $this->app->usePublicPath($publicHtmlPath);
+        }
     }
 
     /**
