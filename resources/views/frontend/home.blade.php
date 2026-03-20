@@ -100,7 +100,7 @@
     
     {{-- ═══════ LAYANAN ═══════ --}}
     @if($services->count() > 0)
-    <section class="py-20 bg-gray-50 dark:bg-slate-950 transition-colors border-b border-gray-100 dark:border-slate-800">
+    <section class="py-20 bg-gradient-to-r from-purple-50 via-white to-purple-50 dark:from-slate-950 dark:via-indigo-950/30 dark:to-slate-950 transition-colors border-b border-purple-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 tracking-wide uppercase">Layanan Kami</h2>
@@ -130,7 +130,7 @@
 
     {{-- ═══════ PORTOFOLIO (Menggantikan Tentang Kami) ═══════ --}}
     @if($portfolios->count() > 0)
-    <section class="py-20 bg-gray-50 dark:bg-slate-950 transition-colors">
+    <section class="py-20 bg-gradient-to-b from-white to-indigo-50/80 dark:from-slate-950 dark:to-indigo-950/20 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 tracking-wide uppercase">Portofolio</h2>
@@ -165,7 +165,7 @@
 
     {{-- ═══════ BERITA TERBARU (3 Berita Terakhir) ═══════ --}}
     @if($posts->count() > 0)
-    <section class="py-20 bg-white dark:bg-slate-900 transition-colors border-b border-gray-100 dark:border-slate-800">
+    <section class="py-20 bg-gradient-to-l from-purple-50/80 via-white to-white dark:from-purple-950/30 dark:via-slate-900 dark:to-slate-900 transition-colors border-b border-purple-100 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 tracking-wide uppercase">Berita Terbaru</h2>
