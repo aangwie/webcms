@@ -53,8 +53,25 @@ class UpdateWebsiteController extends Controller
                 Artisan::call('config:clear');
                 $output = "Configuration cache cleared successfully:\n" . Artisan::output();
             } elseif ($action === 'storage_link') {
-                Artisan::call('storage:link');
-                $output = "Storage link created successfully:\n" . Artisan::output();
+                $target = storage_path('app/public');
+                $publicHtmlPath = base_path('../public_html');
+                
+                // Cek apakah folder public_html ada (Shared Hosting)
+                if (is_dir($publicHtmlPath)) {
+                    $link = $publicHtmlPath . '/storage';
+                } else {
+                    $link = public_path('storage');
+                }
+
+                if (file_exists($link) || is_link($link)) {
+                    $output = "The [$link] link already exists.";
+                } else {
+                    if (symlink($target, $link)) {
+                        $output = "Storage link created successfully:\nThe [$link] link has been connected to [$target].";
+                    } else {
+                        $output = "Error: Failed to create symlink at [$link]. Please check permissions.";
+                    }
+                }
             } elseif ($action === 'git_pull') {
                 $token = Setting::get('github_token', '');
                 if (!$token) {
