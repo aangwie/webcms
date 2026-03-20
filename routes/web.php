@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\UpdateWebsiteController;
 use Illuminate\Support\Facades\Route;
 
 // ── Installer ──
@@ -44,6 +45,10 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+
+    Route::get('update', [UpdateWebsiteController::class, 'index'])->name('update.index');
+    Route::post('update/token', [UpdateWebsiteController::class, 'saveToken'])->name('update.token');
+    Route::post('update/run', [UpdateWebsiteController::class, 'runCommand'])->name('update.run');
 });
 
 // ── Auth (Breeze) ──
