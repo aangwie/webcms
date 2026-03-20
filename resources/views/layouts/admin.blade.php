@@ -7,8 +7,9 @@
     @php $adminSiteName = \App\Models\Setting::get('site_name', 'WebCMS'); $favicon = \App\Models\Setting::get('site_favicon', ''); @endphp
     <title>@yield('title', 'Admin Panel') - {{ $adminSiteName }}</title>
     @if($favicon)
-        <link rel="icon" type="image/webp" href="{{ asset($favicon) }}?v={{ filemtime(public_path($favicon)) }}">
-        <link rel="shortcut icon" type="image/webp" href="{{ asset($favicon) }}?v={{ filemtime(public_path($favicon)) }}">
+        @php $faviconVer = file_exists(public_path($favicon)) ? filemtime(public_path($favicon)) : '1' @endphp
+        <link rel="icon" type="image/webp" href="{{ asset($favicon) }}?v={{ $faviconVer }}">
+        <link rel="shortcut icon" type="image/webp" href="{{ asset($favicon) }}?v={{ $faviconVer }}">
     @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={darkMode:'class'}</script>
