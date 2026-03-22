@@ -68,3 +68,15 @@
         </div>
     </div>
 </footer>
+
+<!-- Back to Top Button -->
+<div x-data="{ show: false }" 
+     @scroll.window="show = window.pageYOffset > 300" 
+     class="fixed bottom-6 right-6 z-50 transition-all duration-500 ease-in-out"
+     :class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'">
+    <button @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+            class="p-3 bg-indigo-600/70 hover:bg-indigo-600 dark:bg-indigo-500/70 dark:hover:bg-indigo-500 text-white backdrop-blur-md rounded-full shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 border border-white/20 dark:border-white/10"
+            aria-label="Kembali ke atas">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+    </button>
+</div>
