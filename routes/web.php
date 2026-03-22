@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UpdateWebsiteController;
+use App\Http\Controllers\Admin\MessageController;
 use Illuminate\Support\Facades\Route;
 
 // ── Installer ──
@@ -26,6 +27,7 @@ Route::get('/berita', [FrontendController::class, 'berita'])->name('berita');
 Route::get('/berita/{slug}', [FrontendController::class, 'beritaDetail'])->name('berita.detail');
 Route::get('/layanan', [FrontendController::class, 'layanan'])->name('layanan');
 Route::get('/kontak', [FrontendController::class, 'kontak'])->name('kontak');
+Route::post('/kontak', [FrontendController::class, 'kirimPesan'])->name('kontak.submit');
 
 // ── Admin Panel ──
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
@@ -42,6 +44,8 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::resource('portfolios', PortfolioController::class)->except(['show']);
     Route::resource('services', ServiceController::class)->except(['show']);
     Route::resource('partners', PartnerController::class)->except(['show']);
+    Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
+    Route::post('messages/{message}/reply', [MessageController::class, 'reply'])->name('messages.reply');
 
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');

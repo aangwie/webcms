@@ -25,6 +25,13 @@ class SettingController extends Controller
             'facebook'     => Setting::get('facebook', ''),
             'instagram'    => Setting::get('instagram', ''),
             'youtube'      => Setting::get('youtube', ''),
+            'smtp_host'         => Setting::get('smtp_host', ''),
+            'smtp_port'         => Setting::get('smtp_port', ''),
+            'smtp_username'     => Setting::get('smtp_username', ''),
+            'smtp_password'     => Setting::get('smtp_password', ''),
+            'smtp_encryption'   => Setting::get('smtp_encryption', ''),
+            'smtp_from_address' => Setting::get('smtp_from_address', ''),
+            'smtp_from_name'    => Setting::get('smtp_from_name', ''),
         ];
 
         // Get logo dimensions
@@ -62,9 +69,16 @@ class SettingController extends Controller
             'facebook'     => 'nullable|string|max:255',
             'instagram'    => 'nullable|string|max:255',
             'youtube'      => 'nullable|string|max:255',
+            'smtp_host'    => 'nullable|string|max:255',
+            'smtp_port'    => 'nullable|string|max:10',
+            'smtp_username'=> 'nullable|string|max:255',
+            'smtp_password'=> 'nullable|string|max:255',
+            'smtp_encryption'  => 'nullable|string|max:10',
+            'smtp_from_address'=> 'nullable|email|max:255',
+            'smtp_from_name'   => 'nullable|string|max:255',
         ]);
 
-        $keys = ['site_name', 'site_tagline', 'address', 'phone', 'email', 'whatsapp', 'facebook', 'instagram', 'youtube'];
+        $keys = ['site_name', 'site_tagline', 'address', 'phone', 'email', 'whatsapp', 'facebook', 'instagram', 'youtube', 'smtp_host', 'smtp_port', 'smtp_username', 'smtp_password', 'smtp_encryption', 'smtp_from_address', 'smtp_from_name'];
         foreach ($keys as $key) {
             Setting::set($key, $request->input($key));
         }

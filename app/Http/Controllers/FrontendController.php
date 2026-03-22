@@ -9,6 +9,7 @@ use App\Models\Portfolio;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -90,5 +91,18 @@ class FrontendController extends Controller
             'whatsapp' => Setting::get('whatsapp', ''),
         ];
         return view('frontend.kontak', array_merge($data, compact('settings')));
+    }
+
+    public function kirimPesan(Request $request)
+    {
+        $request->validate([
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|max:255',
+            'message' => 'required|string',
+        ]);
+
+        Message::create($request->only(['name', 'email', 'message']));
+
+        return redirect()->route('kontak')->with('success', 'Pesan Anda berhasil dikirim. Kami akan segera menghubungi Anda.');
     }
 }
