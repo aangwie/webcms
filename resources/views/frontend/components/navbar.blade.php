@@ -2,7 +2,7 @@
     $siteName = \App\Models\Setting::get('site_name', 'EduCMS');
     $siteLogo = \App\Models\Setting::get('site_logo', '');
 @endphp
-<nav class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm border-b border-gray-100 dark:border-slate-800 sticky top-0 z-50 transition-colors">
+<nav class="bg-gradient-to-r from-[#d0aefc] to-[#ffffff] dark:bg-none dark:bg-slate-900/90 backdrop-blur-md shadow-sm border-b border-gray-100 dark:border-slate-800 sticky top-0 z-50 transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex-shrink-0 flex items-center">

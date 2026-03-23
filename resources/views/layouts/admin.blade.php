@@ -97,7 +97,7 @@
     </aside>
 
     <div class="min-h-screen flex flex-col transition-all duration-300" :class="sidebarCollapsed?'lg:ml-20':'lg:ml-64'">
-        <header class="sticky top-0 z-20 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 shadow-sm">
+        <header class="sticky top-0 z-20 bg-gradient-to-r from-[#d0aefc] to-[#ffffff] dark:bg-none dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 shadow-sm">
             <div class="flex items-center justify-between h-16 px-4 sm:px-6">
                 <button @click="sidebarOpen=true" class="lg:hidden text-gray-500 dark:text-slate-400 hover:text-gray-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 <h1 class="text-lg font-semibold text-gray-800 dark:text-white hidden sm:block">@yield('header','Dashboard')</h1>
