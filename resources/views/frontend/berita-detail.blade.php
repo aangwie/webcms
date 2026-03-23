@@ -10,7 +10,14 @@
     <script>tailwind.config={darkMode:'class'}</script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>body{font-family:'Inter',sans-serif}[x-cloak]{display:none!important}</style>
+    <style>
+        body{font-family:'Inter',sans-serif}[x-cloak]{display:none!important}
+        /* Custom Overrides for Dark Mode Prose to ensure everything is legible */
+        .dark .prose, .dark .prose p, .dark .prose li, .dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4, .dark .prose h5, .dark .prose h6, .dark .prose strong, .dark .prose em, .dark .prose span { color: #e2e8f0 !important; }
+        .dark .prose a { color: #818cf8 !important; }
+        .dark .prose blockquote { color: #cbd5e1 !important; border-left-color: #475569 !important; }
+        .dark .prose code, .dark .prose pre { color: #e2e8f0 !important; background-color: #334155 !important; border-radius: 0.375rem; padding: 0.125rem 0.25rem; }
+    </style>
     <script>function darkMode(){const s=localStorage.getItem('themeMode'),p=window.matchMedia('(prefers-color-scheme:dark)');function r(m){return m==='dark'||(m==='auto'&&p.matches)}return{themeMode:s||'auto',isDark:r(s||'auto'),setTheme(m){this.themeMode=m;localStorage.setItem('themeMode',m);this.isDark=r(m)},cycleTheme(){const ms=['light','dark','auto'];this.setTheme(ms[(ms.indexOf(this.themeMode)+1)%3])},init(){p.addEventListener('change',()=>{if(this.themeMode==='auto')this.isDark=p.matches})}}}</script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-slate-200 flex flex-col min-h-screen transition-colors" x-data="{mobileMenuOpen:false}">
