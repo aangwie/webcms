@@ -63,7 +63,7 @@
                 ['bold', 'italic', 'underline', 'strike'],
                 [{ 'align': [] }],
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['blockquote', 'link'],
+                ['blockquote', 'code-block', 'link'],
                 ['clean']
             ]
         }
