@@ -64,6 +64,7 @@
                 [{ 'align': [] }],
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                 ['blockquote', 'code-block', 'link'],
+                ['image', 'video', 'formula'],
                 ['clean']
             ]
         }
