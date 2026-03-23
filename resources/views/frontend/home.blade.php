@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         body{font-family:'Inter',sans-serif}
         [x-cloak]{display:none!important}
@@ -137,24 +138,29 @@
                 <p class="mt-2 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Karya Unggulan Kami</p>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                @foreach($portfolios->take(9) as $pf)
-                <div class="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-800">
-                    <div class="aspect-[4/3] overflow-hidden relative">
-                        @if($pf->image_path)
-                        <img src="{{ asset($pf->image_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $pf->title }}">
-                        @else
-                        <div class="w-full h-full bg-indigo-50 dark:bg-slate-800"></div>
-                        @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                            <div>
-                                <h3 class="font-bold text-white text-lg leading-tight mb-1">{{ $pf->title }}</h3>
-                                @if($pf->client)<p class="text-xs text-indigo-300 font-medium">{{ $pf->client }}</p>@endif
+            <div class="swiper portfolio-swiper !pb-14">
+                <div class="swiper-wrapper">
+                    @foreach($portfolios->take(12) as $pf)
+                    <div class="swiper-slide h-auto">
+                        <div class="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-800 h-full">
+                            <div class="aspect-[4/3] overflow-hidden relative">
+                                @if($pf->image_path)
+                                <img src="{{ asset($pf->image_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $pf->title }}">
+                                @else
+                                <div class="w-full h-full bg-indigo-50 dark:bg-slate-800"></div>
+                                @endif
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg leading-tight mb-1">{{ $pf->title }}</h3>
+                                        @if($pf->client)<p class="text-xs text-indigo-300 font-medium">{{ $pf->client }}</p>@endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
+                <div class="swiper-pagination"></div>
             </div>
             <div class="text-center mt-12">
                 <a href="{{ route('portofolio') }}" class="inline-flex py-3 px-6 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition">Lihat Semua Portofolio &rarr;</a>
@@ -247,5 +253,28 @@
     </section>
 
     @include('frontend.components.footer')
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        new Swiper('.portfolio-swiper', {
+          slidesPerView: 1,
+          spaceBetween: 24,
+          pagination: { el: '.swiper-pagination', clickable: true },
+          autoplay: { delay: 3500, disableOnInteraction: false },
+          breakpoints: {
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 }
+          }
+        });
+      });
+    </script>
+    <style>
+      .swiper-pagination-bullet { background-color: #94a3b8; transition: all 0.3s; }
+      .swiper-pagination-bullet-active { background-color: #4f46e5; width: 20px; border-radius: 8px; }
+      .dark .swiper-pagination-bullet { background-color: #475569; }
+      .dark .swiper-pagination-bullet-active { background-color: #818cf8; }
+    </style>
 </body>
 </html>
