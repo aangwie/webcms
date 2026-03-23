@@ -3,7 +3,7 @@
 @section('header', 'Edit Berita')
 
 @section('content')
-<div class="max-w-2xl mx-auto">
+<div class="w-full lg:w-3/5 mx-auto">
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border dark:border-slate-700 p-6">
         <form action="{{ route('admin.posts.update', $post) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
             @csrf @method('PUT')
@@ -21,7 +21,10 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Konten <span class="text-red-500">*</span></label>
-                <textarea name="content" rows="8" required class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2 border">{{ old('content', $post->content) }}</textarea>
+                <textarea name="content" id="content-textarea" class="hidden">{{ old('content', $post->content) }}</textarea>
+                <div class="bg-white dark:bg-slate-700 dark:text-white rounded-lg border-gray-300 dark:border-slate-600 shadow-sm border overflow-hidden">
+                    <div id="editor" class="min-h-[300px]"></div>
+                </div>
                 @error('content') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
 
@@ -48,4 +51,44 @@
         </form>
     </div>
 </div>
+
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script>
+    const quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                [{ 'header': [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'align': [] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['blockquote', 'link'],
+                ['clean']
+            ]
+        }
+    });
+
+    const contentTextarea = document.getElementById('content-textarea');
+    quill.root.innerHTML = contentTextarea.value;
+
+    const form = contentTextarea.closest('form');
+    form.addEventListener('submit', function() {
+        if (quill.getText().trim().length === 0 && !quill.root.innerHTML.includes('<img')) {
+            contentTextarea.value = '';
+        } else {
+            contentTextarea.value = quill.root.innerHTML;
+        }
+    });
+</script>
+<style>
+.dark .ql-toolbar { background-color: #1e293b; border-color: #475569; }
+.dark .ql-container { border-color: #475569; }
+.dark .ql-snow .ql-stroke { stroke: #cbd5e1; }
+.dark .ql-snow .ql-fill { fill: #cbd5e1; }
+.dark .ql-snow .ql-picker { color: #cbd5e1; }
+.dark .ql-snow .ql-picker-options { background-color: #1e293b; border-color: #475569; }
+.dark .ql-editor.ql-blank::before { color: #64748b; }
+.ql-editor { min-height: 300px; font-family: 'Inter', sans-serif; font-size: 1rem; }
+</style>
 @endsection

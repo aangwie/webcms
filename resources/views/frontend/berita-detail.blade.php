@@ -6,7 +6,7 @@
     @php $favicon = \App\Models\Setting::get('site_favicon',''); @endphp
     @if($favicon)<link rel="icon" type="image/webp" href="{{ asset($favicon) }}">@endif
     <title>{{ $post->title }} - {{ $siteName }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>tailwind.config={darkMode:'class'}</script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
